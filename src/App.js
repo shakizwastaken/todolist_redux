@@ -1,23 +1,26 @@
-import logo from './logo.svg';
-import './App.css';
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import "./app.css";
+import AddTodo from "./components/addTodo/AddTodo";
+import TodosList from "./components/todosList/TodosList";
+import { setDisplayedTodos } from "./redux/displayedTodosSlice";
 
 function App() {
+  const dispatch = useDispatch();
+
+  const { todos } = useSelector((state) => state);
+
+  useEffect(() => {
+    dispatch(setDisplayedTodos({ todos }));
+  }, [todos]);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="wrapper">
+      <div className="app-container">
+        <h1>Todos list</h1>
+        <TodosList />
+        <AddTodo />
+      </div>
     </div>
   );
 }
